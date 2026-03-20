@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Studio — London</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--void:#0c0c0c;--near:#141414;--surface:#1e1e1e;--border:rgba(255,255,255,.08);--dim:rgba(255,255,255,.28);--mid:rgba(255,255,255,.55);--white:rgba(255,255,255,.92);--sage:#a8b89a;--sage2:#beccb0;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--void);color:var(--white);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:rgba(12,12,12,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-name{font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--sage);letter-spacing:.1em}
+.nav-d,.nav-book-d{display:none}
+.hbg{background:none;border:none;cursor:pointer;padding:.35rem;display:flex;flex-direction:column;gap:5px}
+.hbg span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .3s}
+.hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mmenu{position:fixed;inset:0;background:var(--void);z-index:190;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transform:translateX(100%);transition:transform .35s ease}
+.mmenu.open{transform:translateX(0)}
+.mmenu a{font-family:var(--serif);font-size:2.2rem;font-style:italic;color:var(--white);transition:color .2s}
+.mmenu a:hover{color:var(--sage)}
+.mmenu .m-cta{color:var(--sage)!important;border-bottom:1px solid rgba(168,184,154,.4);padding-bottom:.2rem;font-size:1.5rem}
+@media(min-width:768px){.hbg,.mmenu{display:none!important}.nav-d{display:flex;align-items:center;gap:3rem}.nav-d a{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .2s}.nav-d a:hover{color:var(--white)}.nav-book-d{display:flex;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);border-bottom:1px solid rgba(168,184,154,.3);padding-bottom:.1rem}nav{padding:1.5rem 4rem}}
+.hero{min-height:100svh;background:var(--void);display:flex;flex-direction:column;justify-content:flex-end;padding:5rem 1.25rem 2.5rem;position:relative;overflow:hidden}
+.hero-img-wrap{position:absolute;inset:0}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.25) saturate(.6)}
+.hero-inner{position:relative;z-index:1;max-width:420px}
+.hero-meta{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:3rem}
+.hero-h1{font-family:var(--serif);font-size:clamp(3.2rem,13vw,7rem);font-style:italic;line-height:.9;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em}
+.hero-desc{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);line-height:2.1;max-width:22rem;margin-bottom:2.5rem}
+.hero-cta{display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--sage);border-bottom:1px solid rgba(168,184,154,.3);padding-bottom:.4rem;transition:all .2s}
+.hero-cta:hover{gap:2.5rem;color:var(--sage2)}
+.hero-cta::after{content:'';width:2.5rem;height:1px;background:currentColor;flex-shrink:0}
+@media(min-width:768px){.hero{padding:6rem 4rem 4rem}}
+.services-strip{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--near)}
+.sstrip{padding:1.5rem 1.25rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center}
+.sstrip:nth-child(2n){border-right:none}
+.sstrip:nth-child(3),.sstrip:nth-child(4){border-bottom:none}
+.sstrip-n{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--sage);display:block;margin-bottom:.25rem}
+.sstrip-l{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+@media(min-width:768px){.services-strip{grid-template-columns:repeat(4,1fr)}.sstrip{border-bottom:none}.sstrip:nth-child(2){border-right:1px solid var(--border)}.sstrip:nth-child(3){border-right:1px solid var(--border)}}
+.about{padding:4rem 1.25rem;display:grid;grid-template-columns:1fr;gap:3rem;background:var(--void)}
+.about-idx{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:1.25rem}
+.about h2{font-family:var(--serif);font-size:clamp(2rem,8vw,4rem);font-style:italic;color:var(--white);line-height:1.1;letter-spacing:-.01em}
+.about-r{padding-top:1rem}
+.about p{font-size:.78rem;color:var(--mid);line-height:2.3;margin-bottom:1.25rem;letter-spacing:.03em}
+.about-rule{height:1px;background:var(--border);margin:2rem 0}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.fact-l{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:.35rem}
+.fact-v{font-family:var(--serif);font-style:italic;font-size:.9rem;color:var(--sage)}
+@media(min-width:768px){.about{padding:7rem 4rem;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}}
+.sessions{padding:4rem 1.25rem;background:var(--near);border-top:1px solid var(--border)}
+.sessions-head{margin-bottom:3rem}
+.sessions-head h2{font-family:var(--serif);font-size:clamp(2rem,8vw,3.5rem);font-style:italic;color:var(--white);line-height:1.1;margin-bottom:.5rem}
+.sessions-list{display:flex;flex-direction:column}
+.session{padding:1.75rem 0;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;transition:background .2s}
+.session:last-child{border-bottom:1px solid var(--border)}
+.session h3{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--white);margin-bottom:.35rem;line-height:1.2}
+.session p{font-size:.7rem;color:var(--dim);line-height:1.9;letter-spacing:.03em}
+.session-price{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--sage);text-align:right;white-space:nowrap;padding-top:.2rem}
+.session-dur{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-align:right;margin-top:.3rem}
+@media(min-width:768px){.sessions{padding:7rem 4rem}}
+.fullbleed{height:50vw;min-height:260px;max-height:520px;overflow:hidden;position:relative}
+.fullbleed img{width:100%;height:100%;object-fit:cover;filter:brightness(.4) saturate(.5)}
+.fullbleed-cap{position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.fullbleed-text{font-family:var(--serif);font-size:clamp(1.2rem,5vw,2.5rem);font-style:italic;color:rgba(255,255,255,.45);line-height:1.1}
+.fullbleed-meta{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-align:right}
+@media(min-width:768px){.fullbleed-cap{left:4rem;right:4rem}}
+.book-sec{padding:4rem 1.25rem;background:var(--void);display:grid;grid-template-columns:1fr;gap:3rem;border-top:1px solid var(--border)}
+.book-sec h2{font-family:var(--serif);font-size:clamp(2rem,8vw,3.5rem);font-style:italic;color:var(--white);line-height:1.1;margin-bottom:1.5rem}
+.book-copy p{font-size:.75rem;color:var(--mid);line-height:2.3;margin-bottom:1.25rem;letter-spacing:.04em}
+.book-note{padding:1.5rem;border:1px solid var(--border);font-size:.65rem;color:var(--dim);line-height:2.1;margin-top:1.5rem;letter-spacing:.04em}
+.book-note strong{color:var(--sage);font-weight:400}
+.book-form{display:flex;flex-direction:column}
+.date-sel{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);padding:.85rem 0;font-size:.82rem;font-family:var(--sans);color:var(--white);outline:none;margin-bottom:1.75rem;transition:border-color .2s;-webkit-appearance:none;appearance:none;border-radius:0}
+.date-sel:focus{border-color:var(--sage)}
+.slots-area{margin-bottom:1.5rem}
+.slot-hint{font-size:.7rem;color:var(--dim);letter-spacing:.06em;padding:.5rem 0}
+.slots-flex{display:flex;flex-wrap:wrap;gap:.5rem}
+.slt{padding:.55rem .85rem;font-size:.7rem;letter-spacing:.1em;font-family:var(--sans);border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--mid);transition:all .2s;-webkit-tap-highlight-color:transparent;border-radius:0}
+.slt:hover:not(:disabled){border-color:var(--sage);color:var(--sage)}
+.slt.sel{background:var(--sage);color:var(--void);border-color:var(--sage)}
+.slt:disabled{opacity:.22;cursor:not-allowed;text-decoration:line-through}
+.bfield{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.75rem}
+.bfield label{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+.bfield input,.bfield select{background:transparent;border:none;border-bottom:1px solid var(--border);padding:.8rem 0;font-size:.82rem;font-family:var(--sans);color:var(--white);outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;border-radius:0;letter-spacing:.04em}
+.bfield input:focus,.bfield select:focus{border-color:var(--sage)}
+.bfield input::placeholder{color:var(--dim)}
+.bfield select option{background:var(--near)}
+.bfield-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.b-submit{background:transparent;border:1px solid var(--border);color:var(--sage);padding:1.1rem 1.5rem;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all .25s;display:flex;align-items:center;justify-content:space-between;margin-top:.5rem;border-radius:0;-webkit-tap-highlight-color:transparent}
+.b-submit:hover{border-color:var(--sage);background:rgba(168,184,154,.06)}
+.b-submit:disabled{opacity:.5;cursor:not-allowed}
+.b-submit span{opacity:.35;font-size:1.1rem}
+.fs{margin-top:.75rem;padding:.8rem 1rem;font-size:.75rem;display:none;letter-spacing:.04em;border-radius:0}
+.fs.ok{background:rgba(168,184,154,.08);color:var(--sage);border:1px solid rgba(168,184,154,.25);display:block}
+.fs.err{background:rgba(220,38,38,.1);color:#f87171;border:1px solid rgba(220,38,38,.3);display:block}
+@media(min-width:768px){.book-sec{padding:7rem 4rem;grid-template-columns:1fr 1fr;align-items:start}}
+footer{background:var(--void);border-top:1px solid var(--border);padding:3rem 1.25rem 2rem}
+.fn{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--sage);margin-bottom:.6rem}
+.fb{font-size:.62rem;color:var(--dim);line-height:2.2;margin-bottom:2rem;letter-spacing:.04em;max-width:28rem}
+.ft-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.ft-col h4{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(168,184,154,.5);margin-bottom:.75rem}
+.ft-col a{display:block;font-size:.68rem;color:var(--dim);margin-bottom:.55rem;transition:color .2s;letter-spacing:.05em}
+.ft-col a:hover{color:var(--sage)}
+.ft-bot{font-size:.54rem;letter-spacing:.12em;color:rgba(255,255,255,.14);border-top:1px solid var(--border);padding-top:1.25rem;text-transform:uppercase}
+@media(min-width:768px){footer{padding:4rem 4rem 2.5rem}.ft-cols{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<nav><a href="#" class="nav-name">Form</a><div class="nav-d"><a href="#sessions">Sessions</a><a href="#about">About</a><a href="#book-sec">Book</a></div><a href="#book-sec" class="nav-book-d">Book a session</a><button class="hbg" id="hbg" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav>
+<div class="mmenu" id="mmenu"><a href="#sessions" onclick="toggleMenu()">Sessions</a><a href="#about" onclick="toggleMenu()">About</a><a href="#book-sec" onclick="toggleMenu()">Book</a><a href="#book-sec" class="m-cta" onclick="toggleMenu()">Book a session</a></div>
+<section class="hero"><div class="hero-img-wrap"><img src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Form Studio"></div><div class="hero-inner"><div class="hero-meta">Notting Hill · London W11 · Est. 2018</div><h1 class="hero-h1">Move<br>Better.<br><em>Live</em><br>Better.</h1><p class="hero-desc">A boutique movement studio in West London. Pilates, yoga, and personal training for people who take their bodies seriously.</p><a href="#book-sec" class="hero-cta">Book a session</a></div></section>
+<div class="services-strip"><div class="sstrip"><span class="sstrip-n">Reformer Pilates</span><span class="sstrip-l">Mat & Studio</span></div><div class="sstrip"><span class="sstrip-n">Yoga</span><span class="sstrip-l">Vinyasa & Yin</span></div><div class="sstrip"><span class="sstrip-n">1:1 Training</span><span class="sstrip-l">Bespoke</span></div><div class="sstrip"><span class="sstrip-n">Nutrition</span><span class="sstrip-l">Coaching</span></div></div>
+<section class="about" id="about"><div><div class="about-idx">/ 001 — The studio</div><h2>Movement as practice, not punishment</h2></div><div class="about-r"><p>Form was opened in 2018 by two movement specialists who wanted to create a studio that treated the body as something to be understood, not exhausted. We were tired of gyms where the goal was maximum output and minimum thought.</p><p>Every session at Form begins with an assessment of how you are moving — not how much weight you can lift. We work with postural imbalances, chronic tension, recovery from injury, and the kind of low-grade stiffness that accumulates when you sit at a desk for ten years.</p><div class="about-rule"></div><div class="facts"><div><div class="fact-l">Founded</div><div class="fact-v">2018, Notting Hill</div></div><div><div class="fact-l">Studio size</div><div class="fact-v">8 clients max per class</div></div><div><div class="fact-l">Practitioners</div><div class="fact-v">4 specialist instructors</div></div><div><div class="fact-l">Focus</div><div class="fact-v">Quality of movement</div></div></div></div></section>
+<section class="sessions" id="sessions"><div class="sessions-head"><div class="about-idx">/ 002 — Sessions</div><h2>What we offer</h2></div><div class="sessions-list"><div class="session"><div><h3>Reformer Pilates</h3><p>Small group sessions on the Balanced Body Reformer. Maximum 6 clients. Suitable for all levels — we assess before you begin.</p></div><div><div class="session-price">£45 / session</div><div class="session-dur">55 min · Up to 6</div></div></div><div class="session"><div><h3>Vinyasa Yoga</h3><p>Flowing sequences, breath-led movement, and considered sequencing. Not a workout — a practice. Taught by instructors who have studied deeply.</p></div><div><div class="session-price">£30 / session</div><div class="session-dur">60 min · Up to 8</div></div></div><div class="session"><div><h3>Yin & Restorative</h3><p>Long holds, connective tissue work, and genuine rest. The counterbalance to everything else you do. Increasingly our most popular offering.</p></div><div><div class="session-price">£30 / session</div><div class="session-dur">75 min · Up to 8</div></div></div><div class="session"><div><h3>1:1 Personal Training</h3><p>Fully bespoke. Programme design, movement assessment, and a trainer who focuses exclusively on you for the full session. No distractions.</p></div><div><div class="session-price">£95 / session</div><div class="session-dur">60 min · Solo</div></div></div><div class="session"><div><h3>Nutrition Coaching</h3><p>Six-session programme developed with a registered nutritionist. Food as information, not restriction. Focused on long-term change.</p></div><div><div class="session-price">£350 / programme</div><div class="session-dur">6 × 45 min</div></div></div></div></section>
+<div class="fullbleed"><img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Studio"><div class="fullbleed-cap"><div class="fullbleed-text">The studio,<br>W11</div><div class="fullbleed-meta">Form Studio<br>Notting Hill<br>Est. 2018</div></div></div>
+<section class="book-sec" id="book-sec"><div class="book-copy"><h2>Book a session</h2><p>We take bookings up to four weeks in advance. Sessions fill quickly — if you cannot find availability, add yourself to the waiting list via the form.</p><div class="book-note"><strong>Cancellation policy</strong><br>We require 24 hours' notice for cancellation or rescheduling. Late cancellations are charged in full.</div></div><div class="book-form"><input type="date" class="date-sel" id="apptDate" onchange="loadSlots(this.value)"><div class="slots-area" id="slotsArea"><div class="slot-hint">Choose a date to see availability</div></div><div id="bFields" style="display:none;flex-direction:column"><div class="bfield"><label>Full name</label><input type="text" id="bName" placeholder="—" autocomplete="name"></div><div class="bfield-2"><div class="bfield"><label>Email</label><input type="email" id="bEmail" placeholder="—" autocomplete="email"></div><div class="bfield"><label>Phone</label><input type="tel" id="bPhone" placeholder="—" inputmode="tel"></div></div><div class="bfield"><label>Session type</label><select id="bSvc"><option>—</option><option>Reformer Pilates (£45)</option><option>Vinyasa Yoga (£30)</option><option>Yin & Restorative (£30)</option><option>1:1 Personal Training (£95)</option></select></div><button class="b-submit" id="bBtn" onclick="submitBooking()">Send booking request <span>→</span></button></div><div class="fs" id="fs"></div></div></section>
+<footer><div class="fn">Form</div><p class="fb">A boutique movement studio in Notting Hill, London W11. Reformer Pilates, yoga, and 1:1 training. Founded 2018. Maximum 8 clients per class.</p><div class="ft-cols"><div class="ft-col"><h4>Sessions</h4><a href="#">Reformer Pilates</a><a href="#">Vinyasa Yoga</a><a href="#">1:1 Training</a><a href="#">Nutrition</a></div><div class="ft-col"><h4>Studio</h4><a href="#">About Form</a><a href="#">Our instructors</a><a href="#">Memberships</a></div><div class="ft-col"><h4>Contact</h4><a href="#">Pembridge Villas, W11</a><a href="#">hello@formstudio.co.uk</a></div></div><div class="ft-bot">© 2025 Form Studio Ltd · Notting Hill, London W11</div></footer>
+<script>
+function toggleMenu(){const h=document.getElementById('hbg'),m=document.getElementById('mmenu');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+document.getElementById('apptDate').min=new Date().toISOString().split('T')[0];
+const SLOTS=['07:00','07:30','08:00','09:00','09:30','10:00','11:00','12:00','17:00','18:00','19:00'];
+let sel=null;
+function loadSlots(d){if(!d)return;sel=null;document.getElementById('bFields').style.display='none';const area=document.getElementById('slotsArea');area.innerHTML='<div class="slot-hint">Loading...</div>';setTimeout(()=>{const demo=SLOTS.map(t=>({time:t,available:Math.random()>.45}));renderSlots(demo);},300);}
+function renderSlots(slots){const area=document.getElementById('slotsArea');const wrap=document.createElement('div');wrap.className='slots-flex';slots.forEach(s=>{const b=document.createElement('button');b.className='slt';b.textContent=s.time;b.disabled=!s.available;b.onclick=()=>{document.querySelectorAll('.slt').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=s.time;const bf=document.getElementById('bFields');bf.style.display='flex';bf.style.flexDirection='column';};wrap.appendChild(b);});area.innerHTML='';area.appendChild(wrap);}
+async function submitBooking(){const n=document.getElementById('bName').value.trim(),e=document.getElementById('bEmail').value.trim();if(!n||!e||!sel){showFS('Please provide name, email, and select a time.','err');return;}const btn=document.getElementById('bBtn');btn.disabled=true;btn.childNodes[0].textContent='Sending... ';try{await fetch('/api/enquire',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,email:e,phone:document.getElementById('bPhone').value,service:document.getElementById('bSvc').value,date:document.getElementById('apptDate').value,time:sel,siteName:'Form Studio'})}).catch(()=>{});showFS('Thank you. We\'ll confirm your booking by email within a few hours.','ok');document.querySelectorAll('.slt.sel').forEach(b=>{b.disabled=true;b.classList.remove('sel');});sel=null;btn.childNodes[0].textContent='Sent ✓ ';}catch{btn.disabled=false;btn.childNodes[0].textContent='Send booking request ';showFS('Something went wrong. Email hello@formstudio.co.uk','err');}}
+function showFS(m,t){const e=document.getElementById('fs');e.textContent=m;e.className='fs '+t;}
+</script>
+</body>
+</html>
